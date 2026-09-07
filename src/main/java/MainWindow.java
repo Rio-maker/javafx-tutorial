@@ -21,7 +21,7 @@ public class MainWindow extends AnchorPane {
 
     // The original DaUser.png was a WebP file with the wrong extension.
     // JavaFX 17 cannot decode WebP, so use the verified PNG supplied by the tutorial.
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.tutorial.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.jpeg"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
     @FXML
