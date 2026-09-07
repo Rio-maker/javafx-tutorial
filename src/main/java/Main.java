@@ -22,6 +22,8 @@ public class Main extends Application {
     private Image dukeImage =
             new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
+    private Duke duke = new Duke();
+
     @Override
     public void start(Stage stage) {
         scrollPane = new ScrollPane();
@@ -30,9 +32,6 @@ public class Main extends Application {
 
         userInput = new TextField();
         sendButton = new Button("Send");
-
-        DialogBox dialogBox = new DialogBox("Hello!", dukeImage);
-        dialogContainer.getChildren().add(dialogBox);
 
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
@@ -66,6 +65,29 @@ public class Main extends Application {
 
         AnchorPane.setLeftAnchor(userInput, 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
+
+        sendButton.setOnAction(event -> handleUserInput());
+        userInput.setOnAction(event -> handleUserInput());
+
+        // Scroll down whenever a new dialog changes the container height.
+        dialogContainer.heightProperty().addListener(observable -> scrollPane.setVvalue(1.0));
+    }
+
+    /**
+     * Adds the user's message and Duke's response to the conversation.
+     */
+    private void handleUserInput() {
+        String userText = userInput.getText();
+        if (userText.isBlank()) {
+            return;
+        }
+
+        String dukeText = duke.getResponse(userText);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getDukeDialog(dukeText, dukeImage)
+        );
+        userInput.clear();
     }
 }
 
